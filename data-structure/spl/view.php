@@ -7,18 +7,20 @@
     </colgroup>
     <tr>
         <?php foreach ($obj->getList() as $key => $value) : ?>
-
             <td bgcolor="<?php echo ($obj->getCurrent() == $value) ? "red" : "#deb887" ?>" height="60px" align="center"><?php echo $value ?></td>
-
         <?php endforeach ?>
     </tr>
 </table>
 </br></br></br>
 <form method="post">
-    <input type="submit" name="move_left" value="Move left">
-    <input type="submit" name="move_right" value="Move right"> </br></br>
+
     <input type="submit" name="fifo_add" value="FIFO add">
-    <input type="submit" name="fifo_delete" value="FIFO delete"></br></br>
-    <input type="submit" name="lifo_add" value="LIFO add">
-    <input type="submit" name="lifo_delete" value="LIFO delete">
+    <input type="submit" name="lifo_add" value="LIFO add"></br></br>
+    <?php if (!$obj->isEmpty()) : ?>
+        <input type="submit" name="fifo_delete" value="FIFO delete">
+        <input type="submit" name="lifo_delete" value="LIFO delete">
+            </br></br>
+        <input type="submit" name="move_left" value="Move left">
+        <input type="submit" name="move_right" value="Move right">
+    <?php endif ?>
 </form>

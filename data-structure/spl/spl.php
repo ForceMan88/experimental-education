@@ -2,7 +2,6 @@
 ini_set('display_errors', 1);
 class TestDataStructure
 {
-
     protected $_currentElement;
 
     /** @var $_list SplDoublyLinkedList */
@@ -16,7 +15,6 @@ class TestDataStructure
         $this->_init();
     }
 
-
     private function _init()
     {
         $this->_list = new SplDoublyLinkedList();
@@ -25,10 +23,8 @@ class TestDataStructure
             $this->getList()->unserialize($_SESSION['stack']);
         }
 
-        $this->getList()->rewind();
-
         if (isset($_SESSION['current'])) {
-            $this->setCurrent($_SESSION['current']);
+            $this->moveToCurrent($_SESSION['current']);
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && $action = array_intersect($this->_actions, array_keys($_POST))) {
@@ -36,12 +32,38 @@ class TestDataStructure
         } else {
             echo "<h1>Please select some action!</h1>";
         }
-
     }
 
-    public function setCurrent($current)
+    public function moveToCurrent($current)
     {
+        $found = false;
+        $this->getList()->setIteratorMode(SplDoublyLinkedList::IT_MODE_KEEP);
+        $this->rewind();
+        while ($value = $this->current()) {
+            if ($value == $current) {
+                $found = true;
+                break;
+            }
+
+            $this->next();
+        }
+
+        $this->setCurrent($found ? $current : null);
+    }
+
+    public function setCurrent($current = null)
+    {
+        if (!is_null($current)) {
+            $current = $current;
+        } elseif ($this->current()) {
+            $current = $this->current();
+        } else {
+            echo "<h1>You pointer is out from list, you can start from begining</h1>";
+            $current = null;
+        }
+
         $this->_currentElement = $_SESSION['current'] = $current;
+
     }
 
     public function getCurrent()
@@ -52,48 +74,33 @@ class TestDataStructure
     public function _doAction($action)
     {
         switch ($action) {
+            case 'move_right':
+                $this->move($action);
+                break;
             case 'move_left' :
-                $this->movePrev($action);
+                $this->move($action);
                 break;
-            case 'move_right' :
-                $this->moveNext($action);
-                break;
-            case
-                'fifo_add' :
-                $this->getList()->unshift(rand(0, 100));
+            case 'lifo_delete':
+                $this->delete($action);
                 break;
             case 'fifo_delete' :
-                $this->fifoDelete();
+                $this->delete($action);
+                break;
+            case
+            'fifo_add' :
+                $this->getList()->unshift(rand(0, 1000));
                 break;
             case'lifo_add' :
                 $this->getList()->push(rand(0, 100));
                 break;
-            case'lifo_delete' :
-                $this->lifoDelete();
-                break;
         }
     }
 
-    public function fifoDelete()
+    public function delete($action)
     {
-        if ($this->isEmpty()) {
-            echo "<h1>Please add element before delete!</h1>";
-            return;
-        }
-        $this->getList()->shift();
+        ($action == 'lifo_delete') ? $this->getList()->pop() : $this->getList()->shift();
         $this->setCurrent($this->bottom());
     }
-
-    public function lifoDelete()
-    {
-        if ($this->isEmpty()) {
-            echo "<h1>Please add element before delete!</h1>";
-            return;
-        }
-        $this->getList()->pop();
-        $this->setCurrent($this->bottom());
-    }
-
 
     public function __destruct()
     {
@@ -105,64 +112,15 @@ class TestDataStructure
         return $this->getList()->bottom();
     }
 
-
-    public function moveNext()
+    public function move($action)
     {
-        $this->getList()->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO);
-
-        if ($this->isEmpty()) {
-            echo "<h1>Please add element before move!</h1>";
-            return;
-        }
-
-        if (is_null($this->getCurrent())) {
-            $this->rewind();
-            $this->setCurrent($this->current());
-            return;
-        }
-
-
-        foreach ($this->getList() as $value) {
-            if ($value == $this->getCurrent()) {
-                $this->next();
-                if ($value = $this->current()) {
-                    $this->setCurrent($value);
-                } else {
-                    echo "<h1>You reasched to the end of the listl!</h1>";
-                    $this->setCurrent($this->getList()->bottom());
-                }
-                break;
-            }
-            $this->next();
-        }
-    }
-    public function movePrev()
-    {
-        $this->getList()->setIteratorMode(SplDoublyLinkedList::IT_MODE_KEEP);
-        if ($this->isEmpty()) {
-            echo "<h1>Please add element before move!</h1>";
-            return;
-        }
-
-        if (is_null($this->getCurrent())) {
-            $this->rewind();
-            $this->setCurrent($this->current());
-            return;
-        }
-
-        foreach ($this->getList() as $value) {
-            if ($value == $this->getCurrent()) {
-                $this->prev();
-                if ($value = $this->current()) {
-                    $this->setCurrent($value);
-                } else {
-                    echo "<h1>You reasched to the end of the listl!</h1>";
-                    $this->setCurrent($this->getList()->bottom());
-                }
-                break;
-            }
+        if ($action == 'move_right') {
+            is_null($this->getCurrent()) ? $this->rewind() : $this->next();
+        } else {
             $this->prev();
         }
+
+        $this->setCurrent();
     }
 
     public function getList()
@@ -199,8 +157,7 @@ class TestDataStructure
 
 $obj = new TestDataStructure();
 
+$obj->getList()->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO);
+$obj->rewind();
 
-include_once("view.php");
-
-
-
+include_once 'view.php';
