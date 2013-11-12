@@ -1,4 +1,6 @@
 <?php
+$time = microtime();
+$memory = memory_get_usage();
 ini_set('display_errors', 1);
 class TestDataStructure
 {
@@ -88,10 +90,10 @@ class TestDataStructure
                 break;
             case
             'fifo_add' :
-                $this->getList()->unshift(rand(0, 1000));
+                $this->getList()->unshift(rand(1, 1000));
                 break;
             case'lifo_add' :
-                $this->getList()->push(rand(0, 100));
+                $this->getList()->push(rand(1, 1000));
                 break;
         }
     }
@@ -109,7 +111,7 @@ class TestDataStructure
 
     public function bottom()
     {
-        return $this->getList()->bottom();
+        return !$this->isEmpty() ? $this->getList()->bottom() : null;
     }
 
     public function move($action)

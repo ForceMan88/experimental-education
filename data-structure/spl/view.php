@@ -24,3 +24,5 @@
         <input type="submit" name="move_right" value="Move right">
     <?php endif ?>
 </form>
+   <h1>Memory usage - <?php echo memory_get_usage() - $memory . " bytes" ?></h1>
+   <h1>Execution time - <?php echo (microtime() - $time) . " microsec "?></h1>
