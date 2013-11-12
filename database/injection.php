@@ -1,7 +1,7 @@
 <?php
 include_once('db.php');
 #!/bin/sh
-$mysqli = new mysqli('localhost', 'root', 'abcABC123', 'one_or_one_vulnerable');
+$mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }

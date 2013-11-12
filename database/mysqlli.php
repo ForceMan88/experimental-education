@@ -7,6 +7,7 @@ if($db->connect_errno > 0){
     die('Unable to connect to database [' . $db->connect_error . ']');
 }
 
+$db->query('INSERT INTO `users`(`username`, `name`) VALUES("name", "username") ');
 $statement_one = $db->prepare('SELECT `name` FROM `users` WHERE `username` = ?');
 $name = 'Bob';
 $statement_one->bind_param('s', $name);
