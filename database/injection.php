@@ -18,13 +18,15 @@ if ($mysqli->query(
     printf("Table test_data successfully created.\n");
 }
 
-$mysqli->query("INSERT INTO `test_data` (`id`, `name`, `score`) VALUES (1, 'Slava', 1), (2, 'Serg', 3);");
+$mysqli->query("INSERT INTO `test_data` (`id`, `name`, `score`) VALUES (1, 'Slava', 1), (2, 'Serg', 3), (3, 'valera', 4), (4, 'brat valeru', 5);");
 
+//$input = (int) $argv[1];
 $input = mysql_real_escape_string($argv[1]);
 
-$res = $mysqli->query("SELECT * FROM `test_data` WHERE `score` = $input");
+
+$res = $mysqli->query("SELECT * FROM `test_data` WHERE `score` =\"$input\"");
 while ($row = $res->fetch_assoc()) {
-    echo " id = " . $row['id'] . "\n";
+    echo "Name name = " . $row['name'] . ",       id = " . $row['id'] . PHP_EOL;
 }
 
 $mysqli->close();
