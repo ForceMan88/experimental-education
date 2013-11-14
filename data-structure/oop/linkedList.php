@@ -1,11 +1,11 @@
 <?php
 class Element
 {
-    public $_previous = null;
+    public $_previous = false;
 
-    public $_next = null;
+    public $_next = false;
 
-    public $_value = null;
+    public $_value = false;
 
 
     public function __construct($val)
@@ -18,12 +18,12 @@ class Element
         $this->_next = $next;
     }
 
-    public function getNext($next)
+    public function getNext()
     {
-        return $this->_next = $next;
+        return $this->_next;
     }
 
-    public function sePrev($prev)
+    public function setPrev($prev)
     {
         $this->_previous = $prev;
     }
@@ -44,16 +44,17 @@ class Element
     }
 }
 
-
 class LinkedList
 {
     protected $_count = 0;
 
-    public $_current = null;
-    public $_last = null;
-    public $_first = null;
+    protected $_current = false;
 
-    public function push($element)
+    protected $_last = false;
+
+    protected $_first = false;
+
+    public function push(Element $element)
     {
         if ($this->isEmpty()) {
             $this->_current = $element;
@@ -67,6 +68,19 @@ class LinkedList
         $this->_last = $element;
         $this->_count++;
     }
+    public function unshift($element)
+    {
+        if ($this->isEmpty()) {
+            $this->_current = $element;
+            $this->_last = $element;
+        } else {
+            $this->_first->setPrev($element);
+            $element->setNext($this->_first);
+        }
+
+        $this->_first = $element;
+        $this->_count++;
+    }
 
     public function isEmpty()
     {
@@ -75,12 +89,20 @@ class LinkedList
 
     public function prev()
     {
-        return ($this->current() && $prev = $this->current->getPrev()) ? $prev : false;
+        if ($this->current() && $prev = $this->current()->getPrev()) {
+            $this->setCurrent($prev);
+        }
+
+        return $prev;
     }
 
     public function next()
     {
-        return ($this->current() && $next = $this->current->getnext()) ? $next : false;
+        if ($this->current() && $next = $this->current()->getNext()) {
+            $this->setCurrent($next);
+        }
+
+        return $next;
     }
 
     public function setCurrent($current)
@@ -88,21 +110,68 @@ class LinkedList
         $this->_current = $current;
     }
 
-    public function shift()
+    public function current()
     {
-
+        return $this->_current;
     }
 
-    public function unshift()
+    public function shift()
     {
+        if ($this->isEmpty()) {
+            return false; //TODO EXCEPTION
+        }
 
+        $element = $this->_first;
+        if ($this->_first = $this->_first->getNext()) {
+            $this->_first->setPrev(false);
+            $this->setCurrent($this->_first);
+            $this->_count--;
+        } else {
+            $this->_freeList();
+        }
+
+        return $element;
     }
 
     public function pop()
     {
+        if ($this->isEmpty()) {
+            return false; //TODO EXCEPTION
+        }
 
+        $element = $this->_last;
+
+        if ($this->_last = $this->_last->getPrev()) {
+            $this->_last->setNext(false);
+            $this->setCurrent($this->_first);
+            $this->_count--;
+        } else {
+            $this->_freeList();
+        }
+
+        return $element;
     }
 
+    protected function _freeList()
+    {
+        $this->_count = 0;
+        $this->_current = false;
+        $this->_last = false;
+        $this->_first = false;
+    }
+}
 
+$list = new LinkedList();
+
+for ($i = 0; $i < 10; $i++) {
+    $list->push(new Element($i));
+}
+
+while ($list->prev()) {
+    echo $list->current()->getData() . '</br>';
+}
+
+while ($list->next()) {
+    echo $list->current()->getData() . '</br>';
 }
 
