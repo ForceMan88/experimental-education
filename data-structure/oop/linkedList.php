@@ -68,6 +68,7 @@ class LinkedList
         $this->_last = $element;
         $this->_count++;
     }
+
     public function unshift($element)
     {
         if ($this->isEmpty()) {
@@ -161,17 +162,146 @@ class LinkedList
     }
 }
 
-$list = new LinkedList();
+//$list = new LinkedList();
+//
+//for ($i = 0; $i < 10; $i++) {
+//    $list->push(new Element($i));
+//}
+//
+//while ($list->prev()) {
+//    echo $list->current()->getData() . '</br>';
+//}
+//
+//while ($list->next()) {
+//    echo $list->current()->getData() . '</br>';
+//}
 
-for ($i = 0; $i < 10; $i++) {
+
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$array = array();
+for($i=0; $i<100; $i++) {
+    array_push($array, $i);
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['100']['procedure'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$array = array();
+for($i=0; $i<1000; $i++) {
+    array_push($array, $i);
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['1000']['procedure'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$array = array();
+for($i=0; $i<10000; $i++) {
+    array_push($array, $i);
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['10000']['procedure'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$array = array();
+for($i=0; $i<100000; $i++) {
+    array_push($array, $i);
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['100000']['procedure'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$list = new LinkedList();
+for($i=0; $i<100; $i++) {
+    $list->push(new Element($i));
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['100']['oop'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$list = new LinkedList();
+for($i=0; $i<1000; $i++) {
+    $list->push(new Element($i));
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['1000']['oop'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$list = new LinkedList();
+for($i=0; $i<10000; $i++) {
+    $list->push(new Element($i));
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['10000']['oop'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$list = new LinkedList();
+for($i=0; $i<100000; $i++) {
     $list->push(new Element($i));
 }
 
-while ($list->prev()) {
-    echo $list->current()->getData() . '</br>';
-}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['100000']['oop'] = array('memory' => $resultMemory, 'time' => $resultTime);
 
-while ($list->next()) {
-    echo $list->current()->getData() . '</br>';
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$list = new SplDoublyLinkedList();
+for($i=0; $i<100; $i++) {
+    $list->push($i);
 }
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['100']['spl'] = array('memory' => $resultMemory, 'time' => $resultTime);
 
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$list = new SplDoublyLinkedList();
+for($i=0; $i<1000; $i++) {
+    $list->push($i);
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['1000']['spl'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$list = new SplDoublyLinkedList();
+for($i=0; $i<10000; $i++) {
+    $list->push($i);
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['10000']['spl'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+
+$startTime = microtime(true);
+$memoryUsage = memory_get_usage();
+$list = new SplDoublyLinkedList();
+for($i=0; $i<100000; $i++) {
+    $list->push($i);
+}
+$resultMemory = abs(memory_get_usage() - $memoryUsage);
+$resultTime = microtime(true) - $startTime;
+$data['100000']['spl'] = array('memory' => $resultMemory, 'time' => $resultTime);
+
+
+
+
+include('test_view.php');
