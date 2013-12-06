@@ -4,27 +4,39 @@
 
 $array = [81, 1, 21, 91, 51, 41, 61, 71, 31, 11];
 
+//var_dump(array_merge( array(), $array));
+//exit;
+//
 
 echo "Start array = " . implode("  ", $array) . "</br>";
 
-function mysort($array)
+function quicksort($array)
 {
-//    $wickPointKey = (int)(count($array) / 2);
-    $wickPoint = $array[0];
+    $wickPointKey = (int) count($array) / 2;
+    $wickPoint = array_shift($array);
     $newArray = array();
-    for ($start = 0; $start < count($array); $start++) {
 
-        if ($array[$start] > $wickPoint) {
-            array_push($newArray, $array[$start]);
-        } else {
-            array_unshift($newArray, $array[$start]);
-        }
+    foreach($array as $value) {
+        $value > $wickPoint ? array_push($newArray, $value) : array_unshift($newArray, $value);
     }
 
-    if (count($newArray) >= 2) {
-           $smallOne = (count(array_slice($newArray, 0, (int)(count($newArray) / 2))) >= 2) ? mysort(array_slice($newArray, 0, (int)(count($newArray) / 2))) : array();
-           $smallTwo = (count(array_slice($newArray, (int)(count($newArray) / 2))) >= 2) ? mysort(array_slice($newArray, (int)(count($newArray) / 2))) : array();
-          $newArray = array_merge($smallOne, $smallTwo);
+    var_dump($newArray);
+    if (count($newArray) > 2) {
+//
+//        var_dump(array_merge(array_slice($newArray, 0, (int)(count($newArray) / 2)), array_slice($newArray,(int)(count($newArray) / 2))));
+//        $newArray = array_merge(array_slice($newArray, 0, (int)(count($newArray) / 2)), array_slice($newArray,(int)(count($newArray) / 2)));
+
+
+           $separator = ceil((count($newArray) / 2));
+//           $smallOne = (count(array_slice($newArray, 0, $separator)) >= 2) ? quicksort(array_slice($newArray, 0, $separator)) : array();
+           $smallOne = quicksort(array_slice($newArray, 0, $separator));
+           $smallTwo = quicksort(array_slice($newArray, $separator));
+//            var_dump(array_slice($newArray, 0, $separator));
+//            var_dump($smallTwo);
+//            var_dump(array_merge($smallTwo, $smallOne));
+                $newArray = array_merge($smallOne, array($wickPoint) , $smallTwo);
+            echo "ONe Iteratiom -------------------------- </br> ";
+
 
 
     }
@@ -33,11 +45,7 @@ function mysort($array)
 
 }
 
-function quickSort(&$array)
-{
-    return mysort($array);
-}
 
-//mysort($array, 5);
+//quicksort($array, 5);
 
-echo "Result array = " . implode("  ", quickSort($array));
+echo "Result array = " . implode("  ", quicksort($array));
