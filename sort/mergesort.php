@@ -2,84 +2,48 @@
 //$array = range(1, 100, 10);
 //shuffle($array);
 
-$array = [81, 3, 1, 21, 91, 51, 41, 61, 71, 31, 11];
-
-//var_dump($array[false]);
-//exit;
+$array = [1, 2,  1, 81, 3, 1, 21, 91, 51, 41, 61, 71, 31, 11];
 
 echo "Start array = " . implode("  ", $array) . "</br>";
 
-function merge_sort($array)
+function merge_sort(array $array)
 {
+    if(count($array) <= 1) {
+        return $array;
+    }
+
+    $r = ceil(count($array) / 2);
+//    $l = 0;
+    $left = $right = array();
     $l = 0;
-
-    $r = false;
-
-    if ($array >=  2) {
-        $part1 = array_slice($array, 0, (int)count($array) / 2);
-        $part2 = array_slice($array, (int)count($array) / 2);
-        $merge = array_merge($part1, $part2);
-    }
-
-    while ($l != count($part1)) {
-        $min = $part1[$l];
-        for ($j = 0; $j < count($part2); $j++) {
-            if ($part2[$j] < $min) {
-                $min = $part2[$j];
-                $keepIndex = $j;
-            }
-        }
-
-        if ($min != $part1[$l]) {
-            unset($array[$keepIndex]);
-            ++$r;
-        } else {
+    while(count(array_merge($left, $right))  != count($array)){
+        if($array[$l] <= $array[$r] && $l <= ceil(count($array) / 2)) {
+            $left[] = $array[$l];
             ++$l;
+        } else {
+            $right[] = is_null( $array[$r] ) ? $array[$l] : $array[$r] ;
+            count($array)-1 == (++$r) ? $r-- : '';
         }
-
-        $result[] = $min;
     }
 
-    return $result;
-    var_dump($result);
 
-//    for ($i = 0; $i < count($array); $i++) {
-//        $min = $array[$i];
-//        for ($j = 0; $j < count($array); $j++) {
-//            if ($array[$j] < $min) {
-//                $min = $array[$j];
-//                $keepIndex = $j;
-//            }
-//        }
+
+    var_dump($left, $right);
 //
-//        if ($min != $array[$i]) {
-//            unset($array[$j]);
-//            $i--;
-//        }
-//
-//
-//        if ($array[$i] > $array[$i + 1]) {
-//            $temp = $array[$i];
-//            $array[$i] = $array[$i + 1];
-//            $array[$i + 1] = $temp;
-//        }
-//
-//        ++$i;
+//    var_dump(array_merge(merge_sort($left), merge_sort($right)));
+
+//    for($i = 0; $i > count($array); $i+2) {
+//        $array[$i] > $array[$i+1] ? $left = $array[$i]  : $right[] = $array[$i+1] ;
 //    }
-//
-//
-//    if (count($array) >= 2) {
-//        $array1 = merge_sort(array_slice($array, 0, (int)count($array) / 2));
-//        $array2 = merge_sort(array_slice($array, (int)count($array) / 2));
-//
-//        for ($i = 0; $i < count($array1); $i++) {
-//            for ($j = 0; $j < count($array); $j++) {
-//
-//                $newArray = $array[$i];
-//            }
-//        }
+
+//    if (count(array_merge($left, $right)) > 2) {
+//        return array_merge(merge_sort($left), merge_sort($right));
 //    }
-//
+    return array_merge(merge_sort($left), merge_sort($right));
+
+//    var_dump($left, $right);
+//    exit;
+
 
 
 
