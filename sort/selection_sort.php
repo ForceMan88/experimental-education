@@ -9,7 +9,7 @@ $array = [1, 1, 81, 3, 1, 21, 91, 51, 41, 61, 71, 31, 11];
 
 echo "Start array = " . implode("  ", $array) . "</br>";
 
-function selection_sort(array $array, $l = 0, $r = 0)
+function selection_sort(array $array)
 {
     for ($i = 0; $i < count($array); $i++) {
             $min = false;
@@ -21,7 +21,6 @@ function selection_sort(array $array, $l = 0, $r = 0)
                     continue;
                 }
             }
-
             $array[$minKey] = $array[$i];
             $array[$i] = $min;
         }

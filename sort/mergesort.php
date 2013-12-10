@@ -2,54 +2,40 @@
 //$array = range(1, 100, 10);
 //shuffle($array);
 
-$array = [1, 2,  1, 81, 3, 1, 21, 91, 51, 41, 61, 71, 31, 11];
+$array = [1, 0, 3 => 2, 2 => 2, 4, 1, 81, 3, 1, 21, 91, 51, 41, 61, 71, 31, 11];
+$array = [0 => 1, 1 => 0, 3 => 2, 2 => 2, 4 => 4, 5 => 1, 6 => 81, 7 => 3, 8 => 1, 9 => 21, 10 => 91, 11 => 51, 12 => 41, 13 => 61, 14 => 71, 15 => 31, 16 => 11];
 
 echo "Start array = " . implode("  ", $array) . "</br>";
 
-function merge_sort(array $array)
+function merge_sort(array $rawArray)
 {
-    if(count($array) <= 1) {
-        return $array;
+    if (count($rawArray) <= 1) {
+        return $rawArray;
     }
 
-    $r = ceil(count($array) / 2);
-//    $l = 0;
-    $left = $right = array();
+    if (count($rawArray) > 2) {
+        for ($i = 0; $i < count($rawArray); $i++) {
+            $i < ceil(count($rawArray) / 2) ? $left[] = $rawArray[$i] : $right[] = $rawArray[$i];
+        }
+
+        $rawArray = array_merge(merge_sort($left), merge_sort($right));
+    }
+
+    $result = array();
     $l = 0;
-    while(count(array_merge($left, $right))  != count($array)){
-        if($array[$l] <= $array[$r] && $l <= ceil(count($array) / 2)) {
-            $left[] = $array[$l];
-            ++$l;
+    $r = ceil(count($rawArray) / 2);
+    while (count($rawArray) != count($result)) {
+        if (($rawArray[$l] <= $rawArray[$r] && $l != ceil(count($rawArray) / 2) && $rawArray[$l] !== false) || $rawArray[$r] === false) {
+            $result[] = $rawArray[$l];
+            $l + 1 < ceil(count($rawArray) / 2) ? $l++ : $rawArray[$l] = false;
         } else {
-            $right[] = is_null( $array[$r] ) ? $array[$l] : $array[$r] ;
-            count($array)-1 == (++$r) ? $r-- : '';
+            $result[] = $rawArray[$r];
+            $r + 1 < count($rawArray) ? $r++ : $rawArray[$r] = false;
         }
     }
 
-
-
-    var_dump($left, $right);
-//
-//    var_dump(array_merge(merge_sort($left), merge_sort($right)));
-
-//    for($i = 0; $i > count($array); $i+2) {
-//        $array[$i] > $array[$i+1] ? $left = $array[$i]  : $right[] = $array[$i+1] ;
-//    }
-
-//    if (count(array_merge($left, $right)) > 2) {
-//        return array_merge(merge_sort($left), merge_sort($right));
-//    }
-    return array_merge(merge_sort($left), merge_sort($right));
-
-//    var_dump($left, $right);
-//    exit;
-
-
-
-
+    var_dump($result);
+    return $result;
 }
-
-
-//mysort($array, 5);
 
 echo "Result array = " . implode("  ", merge_sort($array));
