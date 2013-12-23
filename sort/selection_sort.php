@@ -1,34 +1,35 @@
 <?php
-//$array = range(1, 100, 10);
-//shuffle($array);
+include_once "functions.php";
+$array = ['a','c', 'qd', 'b', 'qc', 'qx', 'dd', 'da', ' dm', 'cd', 'cb', 'ca', 'bd', 'bc', 'ba', 'ck', 'b'];
+$array = ['a', 'bd', 'bc', 'ba', 'c', 'b'];
+$array = ['rp', 'ep', 'ap', 'vp', 'cp', 'dp', 'pp', 'sp', 'bp', 'qp', 'rq', 'eq', 'aq', 'vq', 'cq', 'dq', 'pq', 'sq',
+    'bq', 'qq','rr', 'er', 'ar', 'vr', 'cr', 'dr', 'pr', 'sr', 'br', 'qr', 'rs', 'es', 'as', 'vs', 'cs', 'ds', 'ps', 'ss', 'bs', 'qs',
+    'rv', 'ev', 'av', 'vv', 'cv', 'dv', 'pv', 'sv', 'bv', 'qv', 'rp', 'ep', 'ap', 'vp', 'cp', 'dp', 'pp', 'sp', 'bp', 'qp',
+    'rq', 'eq', 'aq', 'vq', 'cq', 'dq', 'pq', 'sq', 'bq', 'qq', 'rr', 'er', 'ar', 'vr', 'cr', 'dr', 'pr', 'sr', 'br', 'qr',
+    'rs', 'es', 'as', 'vs', 'cs', 'ds', 'ps', 'ss', 'bs', 'qs', 'rv', 'ev', 'av', 'vv', 'cv', 'dv', 'pv', 'sv', 'bv', 'qv'];
 
-$array = [1, 1, 81, 3, 1, 21, 91, 51, 41, 61, 71, 31, 11];
+//sort($array);
+//$array = array_reverse($array);
 
-//var_dump($array[false]);
-//exit;
-
-echo "Start array = " . implode("  ", $array) . "</br>";
+echo "</br>Start array = " . implode("  ", $array) . "</br></br>";
 
 function selection_sort(array $array)
 {
     for ($i = 0; $i < count($array); $i++) {
             $min = false;
             for ($j = $i; $j < count($array); $j++) {
-
-                if ($array[$j] <= $min || $min == false) {
+                counter();
+                if ($array[$j][0] <= $min[0] || $min == false) {
                     $min = $array[$j];
                     $minKey = $j;
                     continue;
                 }
             }
+
             $array[$minKey] = $array[$i];
             $array[$i] = $min;
-        }
-
+    }
     return $array;
 }
-
-
-//mysort($array, 5);
-
-echo "Result array = " . implode("  ", selection_sort($array));
+echo "</br>Result array = " . implode("  ", selection_sort($array)) . "</br>";
+echo "</br>Count of comparisons = " . (counter() - 1) . "</br>";

@@ -1,12 +1,18 @@
 <?php
-//$array = range(1, 100, 10);
-//shuffle($array);
+include_once "functions.php";
+$array = ['a','c', 'qd', 'b', 'qc', 'qx', 'dd', 'da', 'dm', 'cd', 'cb', 'ca', 'bd', 'bc', 'ba', 'ck', 'bm'];
+$array = ['a', 'bd', 'bc', 'ba', 'c', 'b'];
+$array = ['rp', 'ep', 'ap', 'vp', 'cp', 'dp', 'pp', 'sp', 'bp', 'qp', 'rq', 'eq', 'aq', 'vq', 'cq', 'dq', 'pq', 'sq',
+    'bq', 'qq','rr', 'er', 'ar', 'vr', 'cr', 'dr', 'pr', 'sr', 'br', 'qr', 'rs', 'es', 'as', 'vs', 'cs', 'ds', 'ps', 'ss', 'bs', 'qs',
+    'rv', 'ev', 'av', 'vv', 'cv', 'dv', 'pv', 'sv', 'bv', 'qv', 'rp', 'ep', 'ap', 'vp', 'cp', 'dp', 'pp', 'sp', 'bp', 'qp',
+    'rq', 'eq', 'aq', 'vq', 'cq', 'dq', 'pq', 'sq', 'bq', 'qq', 'rr', 'er', 'ar', 'vr', 'cr', 'dr', 'pr', 'sr', 'br', 'qr',
+    'rs', 'es', 'as', 'vs', 'cs', 'ds', 'ps', 'ss', 'bs', 'qs', 'rv', 'ev', 'av', 'vv', 'cv', 'dv', 'pv', 'sv', 'bv', 'qv'];
 
-$array = [1, 0, 3 => 2, 2 => 2, 4, 1, 81, 3, 1, 21, 91, 51, 41, 61, 71, 31, 11];
-$array = [0 => 1, 1 => 0, 3 => 2, 2 => 2, 4 => 4, 5 => 1, 6 => 81, 7 => 3, 8 => 1, 9 => 21, 10 => 91, 11 => 51, 12 => 41, 13 => 61, 14 => 71, 15 => 31, 16 => 11];
+//sort($array);
+//$array = array_reverse($array);
+
 
 echo "Start array = " . implode("  ", $array) . "</br>";
-
 function merge_sort(array $rawArray)
 {
     if (count($rawArray) <= 1) {
@@ -25,7 +31,8 @@ function merge_sort(array $rawArray)
     $l = 0;
     $r = ceil(count($rawArray) / 2);
     while (count($rawArray) != count($result)) {
-        if (($rawArray[$l] <= $rawArray[$r] && $l != ceil(count($rawArray) / 2) && $rawArray[$l] !== false) || $rawArray[$r] === false) {
+        counter();
+        if (($rawArray[$l][0] <= $rawArray[$r][0] && $l != ceil(count($rawArray) / 2) && $rawArray[$l] !== false) || $rawArray[$r] === false) {
             $result[] = $rawArray[$l];
             $l + 1 < ceil(count($rawArray) / 2) ? $l++ : $rawArray[$l] = false;
         } else {
@@ -34,8 +41,9 @@ function merge_sort(array $rawArray)
         }
     }
 
-    var_dump($result);
     return $result;
 }
 
-echo "Result array = " . implode("  ", merge_sort($array));
+
+echo "</br>Result array = " . implode("  ", merge_sort($array)) . '</br>';
+echo "</br>Count of comparisons = " . (counter() - 1) . "</br>";
