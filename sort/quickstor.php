@@ -28,19 +28,39 @@ function quicksort($array)
 }
 
 
-echo "</br>Result array = " . implode("  ", quicksort($array)) . "</br> </br>";
-echo "</br>Count of comparisons = " . (counter() - 1) . "</br>";
+//echo "</br>Result array = " . implode("  ", quicksort($array)) . "</br> </br>";
+//echo "</br>Count of comparisons = " . (counter() - 1) . "</br>";
 ?>
-<table width="100%" style="td:first{color:red}">
+<h1>Input array </h1>
+<table width="100%" border="2px" style="border: 1px">
     <colgroup>
-        <?php foreach ($obj->getList() as $key => $value) : ?>
-            <col width="<?php echo 100/$obj->getList()->count() . '%' ?>"/>
+        <?php foreach ($array as $key => $value) : ?>
+            <!--            <col width="--><?php //echo 100/count($array) +5 . '%' ?><!--"/>-->
+            <col width="10%"/>
         <?php endforeach ?>
         <col width="100%"/>
     </colgroup>
     <tr>
-        <?php foreach ($obj->getList() as $key => $value) : ?>
-            <td bgcolor="<?php echo ($obj->getCurrent() == $value) ? "red" : "#deb887" ?>" height="60px" align="center"><?php echo $value ?></td>
+        <?php foreach ($array  as $value) : ?>
+            <td height="60px" align="center" ><b><?php echo $value ?></b></td>
         <?php endforeach ?>
     </tr>
 </table>
+
+</br></br></br>
+<h1>Output array </h1>
+<table width="100%" border="1px">
+    <colgroup>
+        <?php foreach ($array as $key => $value) : ?>
+            <col width="<?php echo 100/count($array) . '%' ?>"/>
+        <?php endforeach ?>
+        <col width="100%"/>
+    </colgroup>
+    <tr>
+        <?php $array = quicksort($array); ?>
+        <?php foreach ($array  as $value) : ?>
+            <td height="60px" align="center"><b><?php echo $value ?></b></td>
+        <?php endforeach ?>
+    </tr>
+</table>
+<h1>Count of comparisons = <?php echo  ' ' . counter() - 1 ?> </h1>

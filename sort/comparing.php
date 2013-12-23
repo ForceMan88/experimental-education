@@ -80,24 +80,30 @@ function qsort($array)
 
     return array_merge($smallTwo, array($wickPoint), $smallOne);
 }
-
 function insertion_sort($array)
 {
-    for ($i = 0; $i < count($array); $i++) {
+
+    foreach($array as $i => $value){
+        $j = $i + 1;
         counter();
-        for ($j = 0; $j < $i; $j++) {
+        while (($j < count($array) && ($array[$j][0] < $array[$i][0])))
+        {
             counter();
-            if ($array[$i]{0} <= $array[$j]{0}) {
-                $temp = $array[$j];
-                $array[$j] = $array[$i];
-                $array[$i] = $temp;
-                break;
+            $tmp = $array[$i];
+            $array[$i] = $array[$j];
+            $array[$j] = $tmp;
+
+            if ($i > 0)
+            {
+                $i--;
             }
+            $j--;
         }
     }
 
     return $array;
 }
+
 
 function selection_sort(array $array)
 {
