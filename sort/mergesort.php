@@ -47,3 +47,17 @@ function merge_sort(array $rawArray)
 
 echo "</br>Result array = " . implode("  ", merge_sort($array)) . '</br>';
 echo "</br>Count of comparisons = " . (counter() - 1) . "</br>";
+?>
+<table width="100%" style="td:first{color:red}">
+    <colgroup>
+        <?php foreach ($obj->getList() as $key => $value) : ?>
+            <col width="<?php echo 100/$obj->getList()->count() . '%' ?>"/>
+        <?php endforeach ?>
+        <col width="100%"/>
+    </colgroup>
+    <tr>
+        <?php foreach ($obj->getList() as $key => $value) : ?>
+            <td bgcolor="<?php echo ($obj->getCurrent() == $value) ? "red" : "#deb887" ?>" height="60px" align="center"><?php echo $value ?></td>
+        <?php endforeach ?>
+    </tr>
+</table>

@@ -149,7 +149,6 @@ function merge_sort(array $rawArray)
     return $result;
 }
 
-
 ?>
 
 <style type="text/css">

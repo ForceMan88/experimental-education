@@ -33,3 +33,17 @@ function selection_sort(array $array)
 }
 echo "</br>Result array = " . implode("  ", selection_sort($array)) . "</br>";
 echo "</br>Count of comparisons = " . (counter() - 1) . "</br>";
+?>
+<table width="100%" style="td:first{color:red}">
+    <colgroup>
+        <?php foreach ($obj->getList() as $key => $value) : ?>
+            <col width="<?php echo 100/$obj->getList()->count() . '%' ?>"/>
+        <?php endforeach ?>
+        <col width="100%"/>
+    </colgroup>
+    <tr>
+        <?php foreach ($obj->getList() as $key => $value) : ?>
+            <td bgcolor="<?php echo ($obj->getCurrent() == $value) ? "red" : "#deb887" ?>" height="60px" align="center"><?php echo $value ?></td>
+        <?php endforeach ?>
+    </tr>
+</table>
